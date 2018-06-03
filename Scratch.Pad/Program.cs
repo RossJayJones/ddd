@@ -12,10 +12,10 @@ namespace Scratch.Pad
         {
             IMediator mediator = null;
 
-            var domainDispatcher = new DomainDispatcher(mediator);
+            /*var domainDispatcher = new DomainDispatcher(mediator);
             var uow = new DomainEventPublisherBehaviour(domainDispatcher);
             var repository = new CustomerRepository(uow);
-            var customer = repository.Load(new CustomerId("customer")).Result;
+            var customer = repository.Load(new CustomerId("customer")).Result;*/
         }
     }
 }

@@ -24,3 +24,5 @@ C:\Data\Projects\ddd\Scratch.Pad\bin\Debug\netcoreapp2.0\Scratch.Pad.dll
 C:\Data\Projects\ddd\Scratch.Pad\bin\Debug\netcoreapp2.0\Scratch.Pad.pdb
 C:\Data\Projects\ddd\Scratch.Pad\bin\Debug\netcoreapp2.0\Ddd.dll
 C:\Data\Projects\ddd\Scratch.Pad\bin\Debug\netcoreapp2.0\Ddd.pdb
+C:\Data\Projects\ddd\Scratch.Pad\bin\Debug\netcoreapp2.0\Ddd.EntityFramework.dll
+C:\Data\Projects\ddd\Scratch.Pad\bin\Debug\netcoreapp2.0\Ddd.EntityFramework.pdb

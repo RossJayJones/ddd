@@ -4,22 +4,27 @@ using Scratch.Pad.DomainEvents;
 
 namespace Scratch.Pad
 {
-    public class CustomerId : Identity
+    public class PersonId : Identity
     {
-        public CustomerId(string value) : base(value)
+        public PersonId(string value) : base(value)
         {
             
         }
 
-        public CustomerId() : base(Guid.NewGuid().ToString())
+        public PersonId() : base(Guid.NewGuid().ToString())
         {
             
         }
     }
 
-    public class Customer : Aggregate<CustomerId>
+    public class Person : Aggregate<PersonId>
     {
-        public Customer(CustomerId id, string name)
+        public Person()
+        {
+            
+        }
+
+        public Person(PersonId id, string name)
         {
             Id = id;
             Name = name;

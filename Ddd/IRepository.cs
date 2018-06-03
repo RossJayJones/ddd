@@ -5,7 +5,7 @@ namespace Ddd
 {
     public interface IRepository<TAggregate>
     {
-        void Add(TAggregate aggregate);
+        Task Add(TAggregate aggregate);
 
         void Remove(TAggregate aggregate);
     }

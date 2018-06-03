@@ -16,3 +16,5 @@ C:\Data\Projects\ddd\Ddd.EntityFramework\obj\Debug\netcoreapp2.0\Ddd.EntityFrame
 C:\Data\Projects\ddd\Ddd.EntityFramework\obj\Debug\netcoreapp2.0\Ddd.EntityFramework.AssemblyInfo.cs
 C:\Data\Projects\ddd\Ddd.EntityFramework\obj\Debug\netcoreapp2.0\Ddd.EntityFramework.dll
 C:\Data\Projects\ddd\Ddd.EntityFramework\obj\Debug\netcoreapp2.0\Ddd.EntityFramework.pdb
+C:\Data\Projects\ddd\Ddd.EntityFramework\bin\Debug\netcoreapp2.0\Ddd.dll
+C:\Data\Projects\ddd\Ddd.EntityFramework\bin\Debug\netcoreapp2.0\Ddd.pdb

@@ -4,9 +4,9 @@ namespace Scratch.Pad.DomainEvents
 {
     public class CustomerCreatedDomainEvent : IDomainEvent
     {
-        public Customer Customer { get; }
+        public Person Customer { get; }
 
-        public CustomerCreatedDomainEvent(Customer customer)
+        public CustomerCreatedDomainEvent(Person customer)
         {
             Customer = customer;
         }

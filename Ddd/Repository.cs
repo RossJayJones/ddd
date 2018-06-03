@@ -7,9 +7,9 @@ namespace Ddd
         where TAggregate : Aggregate<TAggregateId>
         where TAggregateId : Identity
     {
-        private readonly IDomainBehaviour _unitOfWork;
+        private readonly IDomainUnitOfWork _unitOfWork;
 
-        protected Repository(IDomainBehaviour unitOfWork)
+        protected Repository(IDomainUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -26,9 +26,9 @@ namespace Ddd
             return DoLoad(ids);
         }
 
-        public void Add(TAggregate aggregate)
+        public async Task Add(TAggregate aggregate)
         {
-            DoAdd(aggregate);
+            await DoAdd(aggregate);
             _unitOfWork.Register(aggregate);
         }
 
@@ -41,7 +41,7 @@ namespace Ddd
 
         protected abstract Task<IReadOnlyDictionary<TAggregateId, TAggregate>> DoLoad(IEnumerable<TAggregateId> ids);
 
-        protected abstract void DoAdd(TAggregate aggregate);
+        protected abstract Task DoAdd(TAggregate aggregate);
 
         protected abstract void DoRemove(TAggregate aggregate);
     }
