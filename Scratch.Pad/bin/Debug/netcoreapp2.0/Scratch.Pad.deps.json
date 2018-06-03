@@ -1,13 +1,14 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.0",
-    "signature": "b4355d4f4f1b903c675b9fe63abf0101957bc45f"
+    "signature": "268e3a1d0e3bc980d1a4a3b77dca02edd455d306"
   },
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v2.0": {
       "Scratch.Pad/1.0.0": {
         "dependencies": {
+          "Autofac": "4.8.1",
           "Ddd": "1.0.0",
           "Ddd.EntityFramework": "1.0.0",
           "MediatR": "5.0.1",
@@ -16,6 +17,14 @@
         },
         "runtime": {
           "Scratch.Pad.dll": {}
+        }
+      },
+      "Autofac/4.8.1": {
+        "dependencies": {
+          "System.ComponentModel": "4.0.1"
+        },
+        "runtime": {
+          "lib/netstandard1.1/Autofac.dll": {}
         }
       },
       "MediatR/5.0.1": {
@@ -246,6 +255,11 @@
       "System.Collections.Immutable/1.5.0": {
         "runtime": {
           "lib/netstandard2.0/System.Collections.Immutable.dll": {}
+        }
+      },
+      "System.ComponentModel/4.0.1": {
+        "dependencies": {
+          "System.Runtime": "4.1.0"
         }
       },
       "System.ComponentModel.Annotations/4.5.0": {},
@@ -522,6 +536,13 @@
       "serviceable": false,
       "sha512": ""
     },
+    "Autofac/4.8.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aIT9rupCOdab5RMfxvWTBmOxGU77tLqmvSF4V89SzV6oQcJrtuKw/Xp55xy9EijSktbMka55SbroAPOyT+lziw==",
+      "path": "autofac/4.8.1",
+      "hashPath": "autofac.4.8.1.nupkg.sha512"
+    },
     "MediatR/5.0.1": {
       "type": "package",
       "serviceable": true,
@@ -724,6 +745,13 @@
       "sha512": "sha512-RGxi2aQoXgZ5ge0zxrKqI4PU9LrYYoLC+cnEnWXKsSduCOUhE1GEAAoTexUVT8RZOILQyy1B27HC8Xw/XLGzdQ==",
       "path": "system.collections.immutable/1.5.0",
       "hashPath": "system.collections.immutable.1.5.0.nupkg.sha512"
+    },
+    "System.ComponentModel/4.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-oBZFnm7seFiVfugsIyOvQCWobNZs7FzqDV/B7tx20Ep/l3UUFCPDkdTnCNaJZTU27zjeODmy2C/cP60u3D4c9w==",
+      "path": "system.componentmodel/4.0.1",
+      "hashPath": "system.componentmodel.4.0.1.nupkg.sha512"
     },
     "System.ComponentModel.Annotations/4.5.0": {
       "type": "package",

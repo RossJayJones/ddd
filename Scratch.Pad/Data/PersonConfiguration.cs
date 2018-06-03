@@ -11,7 +11,8 @@ namespace Scratch.Pad.Data
             builder.ToTable(nameof(Person));
             builder.HasKey(nameof(Person.Id));
             builder.Property(nameof(Person.Id)).HasConversion(new IdentityValueConverter<PersonId>(item => new PersonId(item)));
-            builder.Property(nameof(Person.Name)).IsRequired();
+            builder.Property(nameof(Person.FirstName)).IsRequired();
+            builder.Property(nameof(Person.LastName)).IsRequired();
         }
     }
 }

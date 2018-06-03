@@ -19,18 +19,24 @@ namespace Scratch.Pad
 
     public class Person : Aggregate<PersonId>
     {
-        public Person()
+        /// <summary>
+        /// Required for entity framework persistence :/
+        /// </summary>
+        private Person()
         {
             
         }
 
-        public Person(PersonId id, string name)
+        public Person(PersonId id, string firstName, string lastName)
         {
             Id = id;
-            Name = name;
-            AddDomainEvent(new CustomerCreatedDomainEvent(this));
+            FirstName = firstName;
+            LastName = lastName;
+            AddDomainEvent(new PersonCreatedDomainEvent(this));
         }
 
-        public string Name { get; private set; }
+        public string FirstName { get; private set; }
+
+        public string LastName { get; private set; }
     }
 }
