@@ -1,0 +1,52 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.0",
+    "signature": "2c7751c90dc8a12a22f2033205f52713ef47548a"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.0": {
+      "Scratch.Pad/1.0.0": {
+        "dependencies": {
+          "Ddd": "1.0.0",
+          "MediatR": "5.0.1"
+        },
+        "runtime": {
+          "Scratch.Pad.dll": {}
+        }
+      },
+      "MediatR/5.0.1": {
+        "runtime": {
+          "lib/netstandard2.0/MediatR.dll": {}
+        }
+      },
+      "Ddd/1.0.0": {
+        "dependencies": {
+          "MediatR": "5.0.1"
+        },
+        "runtime": {
+          "Ddd.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Scratch.Pad/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "MediatR/5.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-SgJDOVGMUwC4E+cw4GTy3nv9gye+K68HXPpRselRXwdOgodpwdq6vTVQajyptk7AVhCzBD8c3ccYLhNRugfgfA==",
+      "path": "mediatr/5.0.1",
+      "hashPath": "mediatr.5.0.1.nupkg.sha512"
+    },
+    "Ddd/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
