@@ -14,15 +14,15 @@ namespace Scratch.Pad.Repositories
         {
         }
 
-        protected override Task<Person> DoLoad(PersonId id)
+        protected override Task<Person> DoLoad(Identity id)
         {
-            return DbContext.People.FindAsync(id);
+            return DbContext.People.SingleOrDefaultAsync(x => x.Id == id);
         }
 
-        protected override async Task<IReadOnlyDictionary<PersonId, Person>> DoLoad(IEnumerable<PersonId> ids)
+        protected override async Task<IReadOnlyDictionary<Identity, Person>> DoLoad(IEnumerable<Identity> ids)
         {
             var items = await DbContext.People.Where(x => ids.Contains(x.Id)).ToListAsync();
-            return items.Distinct().ToDictionary(x => x.Id);
+            return items.Distinct().ToDictionary(x => (Identity)x.Id);
         }
     }
 }

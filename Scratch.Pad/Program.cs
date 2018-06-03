@@ -1,16 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 using Autofac;
+using Autofac.Core.Lifetime;
 using Ddd;
+using Ddd.Autofac;
 using Ddd.Behaviours;
 using MediatR;
 using MediatR.Pipeline;
 using Scratch.Pad.Data;
 using Scratch.Pad.DomainEvents;
 using Scratch.Pad.DomainHandlers;
+using Scratch.Pad.DomainQueries;
 using Scratch.Pad.Repositories;
 namespace Scratch.Pad
 {
@@ -31,8 +36,11 @@ namespace Scratch.Pad
                 var uow = scope.Resolve<IDomainUnitOfWork>();
                 var db = scope.Resolve<MyDbContext>();
                 var repository = scope.Resolve<IRepository<Person>>();
-                var person = new Person(new PersonId("person1"), "Test", "Person");
-                await repository.Add(person);
+                var person1 = await repository.Load(new PersonId("person1")); //new Person(new PersonId("person2"), "Test", "Person");
+                await person1.ChangeName("x", "y");
+                //var person2 = await repository.Load(new PersonId("person2")); //new Person(new PersonId("person2"), "Test", "Person");
+                //await repository.Add(person);
+                var people = await DomainQueryDispatcher.Execute(new FindPeople());
                 await uow.Commit();
                 await db.SaveChangesAsync();
             }
@@ -41,29 +49,13 @@ namespace Scratch.Pad
 
         private static IContainer CreateContainer()
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
+            var assembliesToScan = new List<Assembly> {typeof(Program).GetTypeInfo().Assembly};
 
-            var mediatrOpenTypes = new[] { typeof(IRequestHandler<,>), typeof(INotificationHandler<>) };
-
-            foreach (var mediatrOpenType in mediatrOpenTypes)
+            var container = DddConfiguration.CreateContainer(assembliesToScan, builder =>
             {
-                builder.RegisterAssemblyTypes(typeof(Program).GetTypeInfo().Assembly).AsClosedTypesOf(mediatrOpenType).AsImplementedInterfaces();
-            }
-
-            builder.Register<ServiceFactory>(ctx =>
-            {
-                var c = ctx.Resolve<IComponentContext>();
-                return t => c.Resolve(t);
+                builder.RegisterType<MyDbContext>().InstancePerLifetimeScope();
+                builder.RegisterType<PersonRepository>().As<IRepository<Person>>().As<IRepository<Person>>();
             });
-
-            builder.RegisterType<MyDbContext>().InstancePerLifetimeScope();
-            builder.RegisterType<DomainUnitOfWork>().As<IDomainUnitOfWork>().InstancePerLifetimeScope();
-            builder.RegisterType<DomainEventPublisherBehaviour>().As<IDomainBehaviour>().InstancePerLifetimeScope();
-            builder.RegisterType<PersonRepository>().As<IRepository<Person, PersonId>>().As<IRepository<Person>>();
-            builder.RegisterType<DomainDispatcher>().AsImplementedInterfaces();
-
-            var container = builder.Build();
 
             return container;
         }

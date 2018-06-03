@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Ddd
 {
-    public static class DomainCommands
+    public static class DomainCommandDispatcher
     {
         public static Func<IDomainCommandDispatcher> Factory;
 

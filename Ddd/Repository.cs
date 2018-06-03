@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Ddd
 {
-    public abstract class Repository<TAggregate, TAggregateId> : IRepository<TAggregate, TAggregateId>
+    public abstract class Repository<TAggregate, TAggregateId> : IRepository<TAggregate>
         where TAggregate : Aggregate<TAggregateId>
         where TAggregateId : Identity
     {
@@ -14,14 +14,14 @@ namespace Ddd
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<TAggregate> Load(TAggregateId id)
+        public async Task<TAggregate> Load(Identity id)
         {
             var aggregate = await DoLoad(id).ConfigureAwait(false);
             _unitOfWork.Register(aggregate);
             return aggregate;
         }
 
-        public Task<IReadOnlyDictionary<TAggregateId, TAggregate>> Load(IEnumerable<TAggregateId> ids)
+        public Task<IReadOnlyDictionary<Identity, TAggregate>> Load(IEnumerable<Identity> ids)
         {
             return DoLoad(ids);
         }
@@ -37,9 +37,9 @@ namespace Ddd
             DoRemove(aggregate);
         }
 
-        protected abstract Task<TAggregate> DoLoad(TAggregateId id);
+        protected abstract Task<TAggregate> DoLoad(Identity id);
 
-        protected abstract Task<IReadOnlyDictionary<TAggregateId, TAggregate>> DoLoad(IEnumerable<TAggregateId> ids);
+        protected abstract Task<IReadOnlyDictionary<Identity, TAggregate>> DoLoad(IEnumerable<Identity> ids);
 
         protected abstract Task DoAdd(TAggregate aggregate);
 

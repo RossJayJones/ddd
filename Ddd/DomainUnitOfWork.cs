@@ -14,6 +14,11 @@ namespace Ddd
 
         public void Register(IAggregate item)
         {
+            if (item == null)
+            {
+                return;
+            }
+
             foreach (var domainBehaviour in _behaviours)
             {
                 domainBehaviour.Register(item);

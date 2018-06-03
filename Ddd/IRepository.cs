@@ -8,14 +8,9 @@ namespace Ddd
         Task Add(TAggregate aggregate);
 
         void Remove(TAggregate aggregate);
-    }
 
-    public interface IRepository<TAggreagate, TAggregateId> : IRepository<TAggreagate>
-        where TAggreagate : Aggregate<TAggregateId>
-        where TAggregateId : Identity
-    {
-        Task<TAggreagate> Load(TAggregateId id);
+        Task<TAggregate> Load(Identity id);
 
-        Task<IReadOnlyDictionary<TAggregateId, TAggreagate>> Load(IEnumerable<TAggregateId> ids);
+        Task<IReadOnlyDictionary<Identity, TAggregate>> Load(IEnumerable<Identity> ids);
     }
 }
