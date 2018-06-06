@@ -1,0 +1,7 @@
+- Create sample query using dapper
+- Create sample value object which is stored as a JSON datatype within sql
+- Investigate and draw up pros/cons list for messaging technologies
+- Create example showing table inheritance
+- Create example showing inheritance using sql data type
+- Create example of DTO mappings
+- Create example of WebAPI integration

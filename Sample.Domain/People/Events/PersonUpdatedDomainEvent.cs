@@ -2,9 +2,9 @@
 
 namespace Sample.Domain.People.Events
 {
-    public class NameChangedDomainEvent : IDomainEvent
+    public class PersonUpdatedDomainEvent : IDomainEvent
     {
-        public NameChangedDomainEvent(PersonId personId, Name name)
+        public PersonUpdatedDomainEvent(PersonId personId, Name name)
         {
             PersonId = personId;
             Name = name;

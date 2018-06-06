@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Ddd;
+using Sample.Domain.Exceptions;
+using Sample.Domain.Queries;
 
 namespace Sample.Domain
 {
@@ -20,5 +23,32 @@ namespace Sample.Domain
         }
 
         public IReadOnlyCollection<PersonId> PeopleIds => _peopleIds;
+
+        public async Task AddPerson(Person person)
+        {
+            if (_peopleIds.Contains(person.Id))
+            {
+                return;
+            }
+
+            if (person.BelongsToTeam())
+            {
+                var otherTeamName = await DomainQueryDispatcher.Execute(new FindTeamNameById {TeamId = person.TeamId});
+
+                throw new DomainException($"{person.Name.Full} already belongs to team {otherTeamName}");
+            }
+
+            _peopleIds.Add(person.Id);
+        }
+
+        public void RemovePerson(Person person)
+        {
+            if (!_peopleIds.Contains(person.Id))
+            {
+                return;
+            }
+
+            _peopleIds.Remove(person.Id);
+        }
     }
 }

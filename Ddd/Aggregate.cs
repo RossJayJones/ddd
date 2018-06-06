@@ -22,7 +22,7 @@ namespace Ddd
             _domainEvents.Clear();
         }
 
-        public void AddDomainEvent(IDomainEvent domainEvent)
+        protected void AddDomainEvent(IDomainEvent domainEvent)
         {
             _domainEvents.Add(domainEvent);
         }

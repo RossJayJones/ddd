@@ -32,18 +32,50 @@ namespace Sample.Domain
 
         public Name Name { get; set; }
 
+        public TeamId TeamId { get; set; }
+
         public IReadOnlyCollection<Contact> Contacts => _contacts;
 
-        public void ChangeName(Name name)
+        public void Update(Name name)
         {
             Name = name;
-            AddDomainEvent(new NameChangedDomainEvent(Id, Name));
+            AddDomainEvent(new PersonUpdatedDomainEvent(Id, Name));
+        }
+
+        public void AddContact(Contact contact)
+        {
+            if (_contacts.Contains(contact))
+            {
+                return;
+            }
+
+            _contacts.Add(contact);
+        }
+
+        public void RemoveContact(Contact contact)
+        {
+            if (!_contacts.Contains(contact))
+            {
+                return;
+            }
+
+            _contacts.Remove(contact);
         }
 
         public Task<PagedCollection<PersonByName>> FindOtherPeopleWithTheSameName()
         {
             var query = new FindPeopleByName {Term = Name.Full};
             return DomainQueryDispatcher.Execute(query);
+        }
+
+        public void Delete()
+        {
+            AddDomainEvent(new PersonDeletedDomainEvent(Id));
+        }
+
+        public bool BelongsToTeam()
+        {
+            return TeamId != null;
         }
     }
 }

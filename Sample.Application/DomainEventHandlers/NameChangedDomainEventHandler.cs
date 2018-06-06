@@ -5,9 +5,9 @@ using Sample.Application.InfrastructureServices;
 using Sample.Domain;
 using Sample.Domain.People.Events;
 
-namespace Sample.Application.Handlers
+namespace Sample.Application.DomainEventHandlers
 {
-    public class NameChangedDomainEventHandler : IDomainEventHandler<NameChangedDomainEvent>
+    public class NameChangedDomainEventHandler : IDomainEventHandler<PersonUpdatedDomainEvent>
     {
         private readonly IRepository<Person> _people;
         private readonly IEmailDispatcherService _emailDispatcherService;
@@ -18,7 +18,7 @@ namespace Sample.Application.Handlers
             _emailDispatcherService = emailDispatcherService;
         }
 
-        public async Task Handle(NameChangedDomainEvent notification, CancellationToken cancellationToken)
+        public async Task Handle(PersonUpdatedDomainEvent notification, CancellationToken cancellationToken)
         {
             var person = await _people.Load(notification.PersonId);
 

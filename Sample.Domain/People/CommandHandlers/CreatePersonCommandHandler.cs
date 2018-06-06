@@ -1,21 +1,20 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Ddd;
-using Sample.Domain;
 using Sample.Domain.People.Commands;
 
-namespace Sample.Application.Handlers
+namespace Sample.Domain.People.CommandHandlers
 {
-    public class CreatePersonDomainCommandHandler : IDomainCommandHandler<CreatePersonDomainCommand, bool>
+    public class CreatePersonCommandHandler : IDomainCommandHandler<CreatePersonCommand, bool>
     {
         private readonly IRepository<Person> _people;
 
-        public CreatePersonDomainCommandHandler(IRepository<Person> people)
+        public CreatePersonCommandHandler(IRepository<Person> people)
         {
             _people = people;
         }
 
-        public async Task<bool> Handle(CreatePersonDomainCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(CreatePersonCommand request, CancellationToken cancellationToken)
         {
             if (request.Name == null)
             {

@@ -6,7 +6,7 @@ using Ddd.Queries;
 using Sample.Domain.Queries;
 using Sample.Domain.Queries.Model;
 
-namespace Sample.Application.QueryHandlers
+namespace Sample.Application.DomainQueryHandlers
 {
     public class FindPeopleByNameQueryHandler : IDomainQueryHandler<FindPeopleByName, PagedCollection<PersonByName>>
     {
