@@ -1,6 +1,6 @@
 # Domain Driven Design Framework
 
-The Domain Driven Design (DDD) framework provides some building blocks for creating a DDD bounded context. It addresses the following DDD concerns:
+The Domain Driven Design (DDD) framework provides some building blocks for creating a DDD bounded context. It is designed to be minimal and tries to implement the DDD concepts without getting in your way. It addresses the following DDD concerns:
 
 ### Domain Concerns
 
@@ -12,8 +12,12 @@ The Domain Driven Design (DDD) framework provides some building blocks for creat
 - Domain Events
 - Domain Queries
 
-### Infrastructure Concerns
+### Application/Infrastructure Concerns
 
+In addition to the core DDD framework some implementation specific packages are available which takes care of some of the boiler plate.
+
+- Autofac
+- MediatR
 - Entity Framework Persistence
 - Dapper Queries (TODO)
 - Messaging (TODO)
@@ -415,6 +419,75 @@ public class FindPeopleByNameQueryHandler : IDomainQueryHandler<FindPeopleByName
 	public Task<PagedCollection<PersonByName>> Handle(FindPeopleByName request, CancellationToken cancellationToken)
 	{
 		// implementation goes here
+	}
+}
+```
+
+## IoC
+
+IoC is used to bind all the components together. Out of the box an Autofac implementation is available. Autofac was chosen for the following reasons:
+
+- Active community and one of the more popular containers.
+- Unity was another consideration however the project has been scaled on citing that existing IoC projects are mature enough not to warrant a IoC container being developed by Microsoft, with Autofac being mentioned as one of the recommended replacements.
+
+The framework can be setup using the static `AutofacConfiguration` class defined in `Ddd.Autofac`.
+
+```
+var assembliesToScan = new List<Assembly> {typeof(Person).GetTypeInfo().Assembly};
+
+var container = AutofacConfiguration.CreateContainer(assembliesToScan, builder =>
+{
+		// configure custom bindings here
+});
+
+return container;
+```
+
+You need to provide the `Create` method with one or more assemblies to scan. These assemblies are the ones which contain your command handlers, query handlers, event handlers and repositories. The static factory method will create the autofac bindings using reflection on those assemblies.
+
+There is a callback which you can implement which will give you an opportunity to register additional services with the autofac `ContainerBuilder`.
+
+The Autofac configuration will also wire up the static `DomainCommandDispatcher` and `DomainQueryDispatcher`. It will manage child scopes to ensure that dependencies are resolved within the correct scope.
+
+Once a container has been created it will be up to you to wire it into the application framework being used. For example WebAPI or an NServiceBus endpoint.
+
+## MediatR
+
+MediatR is the only dependency of the domain framework. It was used because it is a simple and mature mediator pattern implementation which works well with Autofac. It would be possible to remove this dependency by implementing the mediator pattern ourselves. It would not be worth the effort until MediatR gets in out way for whatever reason.
+
+The mediator pattern is used to implement the command, event and query dispatchers. It provides loose coupling with synchronous dispatch using the IoC container to resolve the handlers. The specific implementation can be seen in `DomainDispatcher` which implements `IDomainCommandDispatcher`, `IDomainQueryDispatcher` and `IDomainEventDispatcher`.
+
+```
+public class DomainDispatcher : IDomainCommandDispatcher, IDomainQueryDispatcher, IDomainEventDispatcher
+{
+	private readonly IMediator _mediator;
+
+	public DomainDispatcher(IMediator mediator)
+	{
+		_mediator = mediator;
+	}
+
+	public Task Dispatch(IDomainCommand command)
+	{
+		return _mediator.Send(command);
+	}
+
+	public Task<TResponse> Dispatch<TResponse>(IDomainCommand<TResponse> command)
+	{
+		return _mediator.Send(command);
+	}
+
+	public Task<TResponse> Dispatch<TResponse>(IDomainQuery<TResponse> query)
+	{
+		return _mediator.Send(query);
+	}
+
+	public async Task Dispatch(IPublishDomainEvents entity)
+	{
+		foreach (var domainEvent in entity.FlushDomainEvents())
+		{
+			await _mediator.Publish(domainEvent).ConfigureAwait(false);
+		}
 	}
 }
 ```

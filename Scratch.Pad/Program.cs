@@ -55,7 +55,6 @@ namespace Scratch.Pad
             var container = AutofacConfiguration.CreateContainer(assembliesToScan, builder =>
             {
                 builder.RegisterType<MyDbContext>().InstancePerLifetimeScope();
-                builder.RegisterType<PersonRepository>().As<IRepository<Person>>().As<IRepository<Person>>();
             });
 
             return container;

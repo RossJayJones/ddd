@@ -12,17 +12,21 @@ namespace Ddd.Autofac
     public static class AutofacConfiguration
     {
         static readonly IDictionary<ExecutionContext, ILifetimeScope> ExecutingScopes = new Dictionary<ExecutionContext, ILifetimeScope>();
-        
+
         public static IContainer CreateContainer(IEnumerable<Assembly> assembliesToScan, Action<ContainerBuilder> configure = null)
         {
-            var builder = new ContainerBuilder();
+            return CreateContainer(new ContainerBuilder(), assembliesToScan, configure);
+        }
+
+        public static IContainer CreateContainer(ContainerBuilder builder, IEnumerable<Assembly> assembliesToScan, Action<ContainerBuilder> configure = null)
+        {
             builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();
 
-            var mediatrOpenTypes = new[] { typeof(IRequestHandler<,>), typeof(INotificationHandler<>) };
+            var openTypes = new[] { typeof(IRequestHandler<,>), typeof(INotificationHandler<>), typeof(IRepository<>) };
 
             foreach (var assembly in assembliesToScan)
             {
-                foreach (var mediatrOpenType in mediatrOpenTypes)
+                foreach (var mediatrOpenType in openTypes)
                 {
                     builder.RegisterAssemblyTypes(assembly).AsClosedTypesOf(mediatrOpenType).AsImplementedInterfaces();
                 }
