@@ -13,6 +13,7 @@ namespace Scratch.Pad.Data
             builder.Property(nameof(Person.Id)).HasConversion(new IdentityValueConverter<PersonId>(item => new PersonId(item)));
             builder.Property(nameof(Person.FirstName)).IsRequired();
             builder.Property(nameof(Person.LastName)).IsRequired();
+            builder.Property(nameof(Person.Address)).HasConversion(new JsonValueConverter<Address>());
         }
     }
 }

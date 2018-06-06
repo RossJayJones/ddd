@@ -37,7 +37,8 @@ namespace Scratch.Pad
                 var db = scope.Resolve<MyDbContext>();
                 var repository = scope.Resolve<IRepository<Person>>();
                 var person1 = await repository.Load(new PersonId("person1")); //new Person(new PersonId("person2"), "Test", "Person");
-                await person1.ChangeName("x", "y");
+                person1.ChangeName("x", "y");
+                await person1.DoSomething();
                 //var person2 = await repository.Load(new PersonId("person2")); //new Person(new PersonId("person2"), "Test", "Person");
                 //await repository.Add(person);
                 var people = await DomainQueryDispatcher.Execute(new FindPeople());
@@ -51,7 +52,7 @@ namespace Scratch.Pad
         {
             var assembliesToScan = new List<Assembly> {typeof(Program).GetTypeInfo().Assembly};
 
-            var container = DddConfiguration.CreateContainer(assembliesToScan, builder =>
+            var container = AutofacConfiguration.CreateContainer(assembliesToScan, builder =>
             {
                 builder.RegisterType<MyDbContext>().InstancePerLifetimeScope();
                 builder.RegisterType<PersonRepository>().As<IRepository<Person>>().As<IRepository<Person>>();

@@ -7,9 +7,9 @@ namespace Ddd
     {
         private readonly IEnumerable<IDomainBehaviour> _behaviours;
 
-        public DomainUnitOfWork(IEnumerable<IDomainBehaviour> beahviours)
+        public DomainUnitOfWork(IEnumerable<IDomainBehaviour> behaviours)
         {
-            _behaviours = beahviours;
+            _behaviours = behaviours;
         }
 
         public void Register(IAggregate item)

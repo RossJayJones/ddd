@@ -41,12 +41,17 @@ namespace Scratch.Pad
 
         public string LastName { get; private set; }
 
-        public async Task ChangeName(string firstName, string lastName)
+        public Address Address { get; set; }
+
+        public void ChangeName(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
+        }
 
-            await DomainCommandDispatcher.Send(new DoSomethingCommand(this));
+        public Task DoSomething()
+        {
+            return DomainCommandDispatcher.Send(new DoSomethingCommand(this));
         }
     }
 }

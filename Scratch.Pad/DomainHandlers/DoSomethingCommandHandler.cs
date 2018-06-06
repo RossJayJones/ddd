@@ -11,9 +11,18 @@ namespace Scratch.Pad.DomainHandlers
 {
     public class DoSomethingCommandHandler : IDomainCommandHandler<DoSomethingCommand>
     {
-        public Task<Unit> Handle(DoSomethingCommand request, CancellationToken cancellationToken)
+        private readonly IRepository<Person> _people;
+
+        public DoSomethingCommandHandler(IRepository<Person> people)
         {
-            return Unit.Task;
+            _people = people;
+        }
+
+        public async Task<Unit> Handle(DoSomethingCommand request, CancellationToken cancellationToken)
+        {
+            var person = await _people.Load(new PersonId("person2"));
+            person.ChangeName("bla", "bla");
+            return new Unit();
         }
     }
 }

@@ -9,11 +9,11 @@ using MediatR;
 
 namespace Ddd.Autofac
 {
-    public static class DddConfiguration
+    public static class AutofacConfiguration
     {
         static readonly IDictionary<ExecutionContext, ILifetimeScope> ExecutingScopes = new Dictionary<ExecutionContext, ILifetimeScope>();
         
-        public static IContainer CreateContainer(IEnumerable<Assembly> assembliesToScan, Action<ContainerBuilder> configure)
+        public static IContainer CreateContainer(IEnumerable<Assembly> assembliesToScan, Action<ContainerBuilder> configure = null)
         {
             var builder = new ContainerBuilder();
             builder.RegisterAssemblyTypes(typeof(IMediator).GetTypeInfo().Assembly).AsImplementedInterfaces();

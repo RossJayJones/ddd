@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ddd.Autofac\Ddd.Autofac.csproj" />
     <ProjectReference Include="..\Ddd\Ddd.csproj" />
   </ItemGroup>
 
